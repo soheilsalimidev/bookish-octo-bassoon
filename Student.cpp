@@ -38,9 +38,8 @@ Student::studentSt Student::parseSavedText(const string& text) {
     stringstream ss(text);
     int i = 0;
     studentSt st;
-    while (ss.good()) {
-        string substr;
-        getline(ss, substr, ',');
+    string substr;
+    while (getline(ss, substr, ',')) {
         if (i == 0)st.ID = stoi(substr);
         else st.name = substr;
         i++;

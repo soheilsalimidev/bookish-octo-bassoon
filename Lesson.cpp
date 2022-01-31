@@ -77,16 +77,16 @@ void Lesson::showStudentLessons() {
         LessonsTable.add_row({"Lesson name", "Score", "Unit"});
 
         double avg = 0;
-        int i = 0;
+        int unitsNum = 0;
         while (getline(studentLessonFile, lines)) {
-            i++;
             LessonSt ls = parseSavedText(lines);
-            avg += ls.score;
+            avg += ls.score * ls.unit;
+            unitsNum += ls.unit;
             LessonsTable.add_row({ls.name, to_string(ls.score), to_string(ls.unit)});
         }
         system("cls");
         cout << LessonsTable << endl;
-        cout << "[ Average score of " << st.name << " is " << avg / i << " ]\n\n";
+        cout << "[ Average score of " << st.name << " is " << avg / unitsNum << " ]\n\n";
 
     } else
         cout << "This Id docent Exist :( \n";
@@ -110,9 +110,8 @@ Lesson::LessonSt Lesson::parseSavedText(const string &text) {
     stringstream ss(text);
     int i = 0;
     LessonSt st;
-    while (ss.good()) {
-        string substr;
-        getline(ss, substr, ',');
+    string substr;
+    while (getline(ss, substr, ',')) {
         if (i == 0)st.name = substr;
         else if (i == 1) st.score = stoi(substr);
         else st.unit = stoi(substr);
